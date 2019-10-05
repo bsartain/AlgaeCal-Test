@@ -26,7 +26,7 @@ wistiaVideoContainer.addEventListener('click', function(){
     videoOverlay.setAttribute("style", "z-index: 0");
     if (video.state() === "playing") {
       video.pause();
-    } else if(video.state() === "pause" || video.state() === "beforePlay") {
+    } else {
       video.play();
     }
   }});
