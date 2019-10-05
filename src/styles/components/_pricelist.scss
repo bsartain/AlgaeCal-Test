@@ -362,6 +362,11 @@ $header-height: 100px;
 .funnel-price::before{
   content: '\0024';
 }
+.funnel-price::after{
+  content: "USD";
+  font-size: 12px;
+  margin-left: 3px;
+}
 
 @media screen and (max-width: $screen-sm){
   .pricelist{

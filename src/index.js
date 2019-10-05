@@ -6,6 +6,15 @@ import 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', () => {
   loadSVGs();
+
+  var discountPercentageBubbles = document.querySelectorAll('[data-original-savings]')
+
+  discountPercentageBubbles.forEach((bubble) => {
+    const bubbleValue = bubble.attributes[1].value
+    if(bubbleValue < 1){
+      bubble.parentNode.parentNode.style = 'display:none'
+    }
+  })
 });
 
 const wistiaVideoContainer = document.querySelector('#play-button-overlay-zwflowymel')
