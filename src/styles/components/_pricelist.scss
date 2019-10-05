@@ -156,8 +156,8 @@ $screen-xs-max: $screen-xs -1 !default;
       width: 70px;
       border-radius:200px;
       position:absolute;
-      top:-20px;
-      right:34px;
+      top:296px;
+      right:118px;
       box-shadow: -1px 0px 13px 0px rgba(100,100,100,0.75);
 
       .label {
@@ -183,7 +183,7 @@ $screen-xs-max: $screen-xs -1 !default;
 
   .most-popular{
     .percent-off{
-      top:-61px;
+      top:286px;
       right:14px;
     }
   }
@@ -193,16 +193,18 @@ $screen-xs-max: $screen-xs -1 !default;
     transform:translateX(70%);
   }
   .most-popular .percent-off{
-    transform:translateX(60%);
+    transform:translateX(-70%);
   }
 
   @media screen and (max-width: $screen-md){
     .percent-off{
-      transform:translateX(0);
+      transform:translateX(80%);
+      top: 337px!important;
     }
     .most-popular .percent-off{
       left:50%;
-      transform:translate(220%);
+      transform:translate(56%);
+      top: 326px;
     }
   }
 }
