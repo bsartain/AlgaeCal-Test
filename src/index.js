@@ -3,11 +3,24 @@ import './styles/main.scss';
 import loadSVGs from './modules/svg-replace';
 import 'popper.js';
 import 'bootstrap';
+// import { createSecureContext } from 'tls';
 
 document.addEventListener('DOMContentLoaded', () => {
   
   loadSVGs();
 
+  const api = fetch('https://www.algaecal.com/wp-json/acf/v3/options/options').then((res) => {
+	  return res.json()
+  });
+
+  removeZeroPercentDiscountBubble()
+  setCopyForGuaranteeModal(api)
+  showHideSpeakToCustomerService(api)
+
+});
+
+
+const removeZeroPercentDiscountBubble = () => {
   const discountPercentageBubbles = document.querySelectorAll('[data-original-savings]')
 
   discountPercentageBubbles.forEach((bubble) => {
@@ -16,13 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
       bubble.parentNode.parentNode.style = 'display:none'
     }
   })
+}
 
+const setCopyForGuaranteeModal = (api) => {
   const guaranteeModalTitle = document.querySelector('#guaranteeTitle');
   const guaranteeModalBody = document.querySelector('#guaranteeBody');
-  
-  fetch('https://www.algaecal.com/wp-json/acf/v3/options/options').then((res) => {
-	  return res.json()
-  }).then((res) => {
+  api.then((res) => {
     const object = res.acf;
     
     for (var key in object) {
@@ -35,12 +47,57 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     }
-
   })
 
+}
 
+const padNumber = (number) => {
+  return (number.toString().length < 2) ? ("0" + number) : number;
+}
 
-});
+const showHideSpeakToCustomerService = (api) => {
+  const date = new Date()
+  let todaysOfficeHours
+  let currentDay
+  
+  const speakToOurSpecialistsMarquee = document.querySelector('.speak-to-our-bone-specialists')
+  const pacificTimeZoneDate = new Date(new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"}));
+  
+  const pacificTimeZoneHours = pacificTimeZoneDate.getHours()
+  const pacificTimeZoneMinutes = pacificTimeZoneDate.getMinutes()
+  
+  const formatPacificTimeZoneHours = padNumber(pacificTimeZoneHours)
+  const formatPacificTimeZoneMinutes = padNumber(pacificTimeZoneMinutes)
+  
+  const currentTime = `${formatPacificTimeZoneHours}${formatPacificTimeZoneMinutes}`
+  console.log('CURRENT', currentTime)
+
+  api.then((res) => {
+    
+    if(date.getDay() === 0){
+      currentDay = date.getDay() + 7
+    } else {
+      currentDay = date.getDay()
+    }
+
+    res.acf.office_hours.forEach(hour => {
+      if(parseInt(hour.day) === currentDay){
+        todaysOfficeHours = hour 
+        if(currentTime >= todaysOfficeHours.starting_time && currentTime <= todaysOfficeHours.closing_time){
+          console.log('WE ARE OPEN FOR BUSINESS', currentTime)
+          speakToOurSpecialistsMarquee.classList.remove('d-none')
+          speakToOurSpecialistsMarquee.classList.add('d-md-block')
+        } else {
+          console.log('WE ARE CLOSED', currentTime)
+          speakToOurSpecialistsMarquee.classList.remove('d-md-block')
+          speakToOurSpecialistsMarquee.classList.add('d-none')
+        }
+      }
+    });
+
+  })
+}
+
 
 const wistiaVideoContainer = document.querySelector('#play-button-overlay-zwflowymel')
 const videoOverlay = document.querySelector('.play-button-overlay')
