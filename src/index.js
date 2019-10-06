@@ -5,9 +5,10 @@ import 'popper.js';
 import 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', () => {
+  
   loadSVGs();
 
-  var discountPercentageBubbles = document.querySelectorAll('[data-original-savings]')
+  const discountPercentageBubbles = document.querySelectorAll('[data-original-savings]')
 
   discountPercentageBubbles.forEach((bubble) => {
     const bubbleValue = bubble.attributes[1].value
@@ -15,6 +16,30 @@ document.addEventListener('DOMContentLoaded', () => {
       bubble.parentNode.parentNode.style = 'display:none'
     }
   })
+
+  const guaranteeModalTitle = document.querySelector('#guaranteeTitle');
+  const guaranteeModalBody = document.querySelector('#guaranteeBody');
+  
+  fetch('https://www.algaecal.com/wp-json/acf/v3/options/options').then((res) => {
+	  return res.json()
+  }).then((res) => {
+    const object = res.acf;
+    
+    for (var key in object) {
+      if (object.hasOwnProperty(key)) {
+        if(key === '7yr_full_copy'){
+          guaranteeModalBody.innerHTML += object[key];
+        }
+        if(key === '7yr_title'){
+          guaranteeModalTitle.innerHTML += object[key];
+        }
+      }
+    }
+
+  })
+
+
+
 });
 
 const wistiaVideoContainer = document.querySelector('#play-button-overlay-zwflowymel')
