@@ -70,7 +70,6 @@ const showHideSpeakToCustomerService = (api) => {
   const formatPacificTimeZoneMinutes = padNumber(pacificTimeZoneMinutes)
   
   const currentTime = `${formatPacificTimeZoneHours}${formatPacificTimeZoneMinutes}`
-  console.log('CURRENT', currentTime)
 
   api.then((res) => {
     
@@ -84,11 +83,9 @@ const showHideSpeakToCustomerService = (api) => {
       if(parseInt(hour.day) === currentDay){
         todaysOfficeHours = hour 
         if(currentTime >= todaysOfficeHours.starting_time && currentTime <= todaysOfficeHours.closing_time){
-          console.log('WE ARE OPEN FOR BUSINESS', currentTime)
           speakToOurSpecialistsMarquee.classList.remove('d-none')
           speakToOurSpecialistsMarquee.classList.add('d-md-block')
         } else {
-          console.log('WE ARE CLOSED', currentTime)
           speakToOurSpecialistsMarquee.classList.remove('d-md-block')
           speakToOurSpecialistsMarquee.classList.add('d-none')
         }
