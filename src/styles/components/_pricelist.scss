@@ -384,3 +384,50 @@ $header-height: 100px;
     }
   }
 }
+
+@media screen and (max-width: 1200px){
+  .three-by-cta .most-popular{
+    .percent-off {
+      top: 346px;
+    } 
+  }
+  .purchase-options-new-cta{
+    .product-box-wrapper{
+      .percent-off {
+        top: 339px;
+        right: 111px;
+      } 
+    }
+
+  } 
+}
+
+@media screen and (max-width: 992px){
+  .purchase-options-new-cta{
+    .product-box-wrapper{
+      [data-undiscounted-retail-price="612"] {
+        top: 323px;
+        right: 192px;
+      }
+      [data-undiscounted-retail-price="306"] {
+        top: 281px;
+        left: 120px;
+      } 
+    } 
+  } 
+  
+}
+
+@media screen and (max-width: 767px){
+  .purchase-options-new-cta{
+    .product-box-wrapper{
+      [data-undiscounted-retail-price="306"] {
+        top: 281px;
+        left: 165px;
+      } 
+    } 
+  } 
+  
+}
+
+
